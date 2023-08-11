@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require("morgan");
 const connectDB = require('./config/db');
+const auth = require("./middlewares/auth");
 
 const app=express();
 
@@ -9,6 +10,10 @@ app.use(express.json());
 app.use(morgan("tiny"));
 
 //routes
+//to create a protected route
+// app.get("/protected", auth, (req,res) =>{
+//     return res.status(200).json({ ...req.user._doc});
+// })
 app.use("/api",require("./routes/auth"));
 
 //server configurations
