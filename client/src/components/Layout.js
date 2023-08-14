@@ -1,7 +1,12 @@
-const Layout = ({children}) => {
+import Navbar from "./Navbar"
+
+const Layout = ({navbar =true,children}) => {
     return <>
-        <div className="container">
+        {navbar && <Navbar />}
+         <div className="container mt-3">  
             {children}
         </div>
     </>
 }
+
+export default Layout;
