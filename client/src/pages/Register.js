@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify'; //copied and imported from NPM React Toastify site
+import 'react-toastify/dist/ReactToastify.css'; //copied and imported from NPM React Toastify site
+
+
 const Register = () =>{
     const [credentials, setCredentials] = useState({
         email:"",
@@ -15,10 +19,21 @@ const handleInputChange = (event) =>{
 
 const handleSubmit = (event) =>{
     event.preventDefault(); //to perevent the page from being refreshed when Register button is clicked
+
+    if(!credentials.email || !credentials.password || !credentials.confirmPassword){
+    toast.error("Please enter all the required fields!");
+    return; //To return from the If statement
+}
+//to check if password and confirm password match
+if(credentials.password !== credentials.confirmPassword){
+    toast.error("Passwords do not match!");
+    return;
+}
 }
 
     return (
     <>
+    <ToastContainer  autoClose={2000}/>
     <h3>Create your account</h3>
     
      <form onSubmit={handleSubmit}>
