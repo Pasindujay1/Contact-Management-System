@@ -8,7 +8,8 @@ const app=express();
 //middlewares - Middlewares help us to send responses back in JSON format
 app.use(express.json()); 
 app.use(morgan("tiny"));
-
+app.use(require('cors')());
+// cd;
 //routes
 //to create a protected route
 // app.get("/protected", auth, (req,res) =>{

@@ -2,10 +2,11 @@ const router = require("express").Router();
 const bcrypt = require("bcrypt"); // Required to Hash our password when we pass it to DB
 const User = require("../models/User");
 const jwt = require('jsonwebtoken');
+const auth = require("../middlewares/auth");
 require("dotenv").config({path: "./config/config.env"} );
 
 
-router.post("/login");
+
 
 router.post("/register",async(req,res)=>{
     const {name, email, password} = req.body;
@@ -86,7 +87,9 @@ router.post("/login",async (req,res)=>{
         //Generating token
         const payload = { _id: doesUserExists._id};
         const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn:"1h",});
-        return res.status(200).json({token});
+
+        const user = {...doesUserExists._doc, password:undefined};
+        return res.status(200).json({token, user}); //sending the token and the state of the user
 
     }catch(err){
         console.log(err);
@@ -94,5 +97,9 @@ router.post("/login",async (req,res)=>{
             
     }
 });
+
+router.get("/me",auth,async (req,res) =>{ //we use auth since it needs to be protected middleware
+    return res.status(200).json({...req.user._doc});
+})
 
 module.exports = router;

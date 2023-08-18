@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { ToastContainer, toast } from 'react-toastify'; //copied and imported from NPM React Toastify site
 import 'react-toastify/dist/ReactToastify.css'; //copied and imported from NPM React Toastify site
+import Authcontext from "../context/AuthContext";
 
 const Login = () =>{
+
+    const {loginUser} = useContext(Authcontext); 
 
     const [credentials ,setCredentials] = useState({
         email:"",
@@ -27,7 +30,9 @@ const Login = () =>{
         toast.error("Please enter all the required fields.");
         return;
     }
+    
 
+    loginUser(credentials);
 
     }
 
@@ -36,13 +41,13 @@ const Login = () =>{
     <h3>Login</h3>
 
     <form onSubmit={handleSubmit}>
-        <div class="form-group">
-        <label for="emailInput" class="form-label mt-4">Email address</label>
-        <input type="email" class="form-control"  value={credentials.email} id="emailInput" onChange={handleInputChange} name="email" aria-describedby="emailHelp" placeholder="simon@example.com" required/>
+        <div className="form-group">
+        <label htmlFor="emailInput" className="form-label mt-4">Email address</label>
+        <input type="email" className="form-control"  value={credentials.email} id="emailInput" onChange={handleInputChange} name="email" aria-describedby="emailHelp" placeholder="simon@example.com" required/>
         </div>
-        <div class="form-group">
-        <label for="password" class="form-label mt-4">Password</label>
-        <input type="password" class="form-control" value={credentials.password} id="password" onChange={handleInputChange} name="password"  placeholder="Enter password" required/>
+        <div className="form-group">
+        <label htmlFor="password" className="form-label mt-4">Password</label>
+        <input type="password" className="form-control" value={credentials.password} id="password" onChange={handleInputChange} name="password"  placeholder="Enter password" required/>
         </div>
         <input type="submit" value="Login" className="btn btn-primary my-3" />
         <p>Don't have an account ? <Link to="/Register">Create One</Link></p>
