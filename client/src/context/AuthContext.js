@@ -1,15 +1,20 @@
-import {createContext, useEffect, useState} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import { ToastContainer, toast } from 'react-toastify'; //copied and imported from NPM React Toastify site
 import 'react-toastify/dist/ReactToastify.css'; //copied and imported from NPM React Toastify site
+import ToastContext from "./ToastContext";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 const Authcontext = createContext();
 
 export const AuthcontextProvider = ({children}) =>{
+    const {toast} = useContext(ToastContext);
+    const navigate = useNavigate();
+    const location = useLocation();
     const [user, setUser] = useState(null);
     const [error,setError] =useState(null);
 
-    useEffect(()=>{
+    useEffect(()=>{ //We use UseEffect Hook since we need to load checkUserLoggedIn only one time when the page gets loaded
         checkUserLoggedIn();
     },{})
 
@@ -25,9 +30,10 @@ export const AuthcontextProvider = ({children}) =>{
             const result = await res.json();
             if(!result.error){
                 setUser(result);
-            }else{
-                console.log(result);
 
+                navigate("/",{replace:true}); //navigate user to home route
+
+                
             }
         }catch(err){
             console.log(err);
@@ -51,8 +57,11 @@ export const AuthcontextProvider = ({children}) =>{
                 // console.log(result);
                 localStorage.setItem("token",result.token);
                 setUser(result.user);
+                toast.success(`Logged in ${result.user.name}`)
+                navigate("/",{replace:true}); //navigate user to home route
+
             }else{
-               
+               toast.error(result.error);
             }
             
         }catch(err){
@@ -74,10 +83,10 @@ export const AuthcontextProvider = ({children}) =>{
 
             const result = await res.json();
             if(!result.error){
-                console.log(result);
+                toast.success("User registered successfully! Login into your account!");
+                navigate("/login", {replace: true});
             }else{
-                console.log(result);
-            }
+                toast.error(result.error);            }
         }catch(err){
             console.log(err);
         }

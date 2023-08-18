@@ -1,12 +1,15 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Authcontext from "../context/AuthContext";
+import ToastContext from "../context/ToastContext";
 
 
 const Navbar = ({title = "CMS"}) =>{ //Destructure the title prop  and replace it with thee manager
+    const navigate = useNavigate();
     const {user, setUser} = useContext(Authcontext);
+    const {toast} = useContext(ToastContext);
 
-    
+
     return (
         <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
         <div className="container-fluid">
@@ -24,6 +27,9 @@ const Navbar = ({title = "CMS"}) =>{ //Destructure the title prop  and replace i
                         <li className="nav-item" onClick={() => {
                             setUser(null); //to clear the state of the user when logging out
                             localStorage.clear();
+                            toast.success("Logged out");
+                            navigate("/login",{replace:true}); //navigate user to login route
+
                         }}> 
                             <button className="btn btn-danger"> Logout</button>
                         
