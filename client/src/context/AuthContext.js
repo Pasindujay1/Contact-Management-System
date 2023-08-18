@@ -20,6 +20,9 @@ export const AuthcontextProvider = ({children}) =>{
 
     //check if the user is logged in
     const checkUserLoggedIn = async() =>{
+        
+        
+
         try{
             const res = await fetch(`http://localhost:8000/api/me`,{
                 method:"GET",
@@ -31,9 +34,9 @@ export const AuthcontextProvider = ({children}) =>{
             if(!result.error){
                 setUser(result);
 
-                navigate("/",{replace:true}); //navigate user to home route
-
-                
+                navigate("/",{replace:true}); //navigate user to home route  
+            }else{
+                navigate("/login",{replace:true});
             }
         }catch(err){
             console.log(err);
