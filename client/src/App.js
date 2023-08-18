@@ -5,6 +5,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { AuthcontextProvider } from "./context/AuthContext";
 import { ToastContextProvider } from "./context/ToastContext";
+import CreateContact from "./pages/CreateContact";
+import AllContact from "./pages/AllContact";
 
 
 const App = () => {
@@ -14,8 +16,11 @@ const App = () => {
         <Layout>
           <Switch>
             <Route path ="/" element={<Home/>} />
-            <Route path ="/Login" element={<Login/>} />
-            <Route path ="/Register" element={<Register/>} />
+            <Route path ="/login" element={<Login/>} />
+            <Route path ="/register" element={<Register/>} />
+            <Route path ="/create" element={<CreateContact/>} />
+            <Route path ="/mycontacts" element={<AllContact/>} />
+
           </Switch>  
         </Layout>
       </AuthcontextProvider>

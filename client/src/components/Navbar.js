@@ -24,6 +24,18 @@ const Navbar = ({title = "CMS"}) =>{ //Destructure the title prop  and replace i
             <ul className="navbar-nav ms-auto">
                 {user ? (
                     <>
+                        <li className="nav-item">
+                            <Link to="/mycontacts">
+                                <a className="nav-link">ALL CONTACTS</a>
+                            </Link>
+                        
+                        </li>
+                        <li className="nav-item">
+                            <Link to="/create">
+                                <a className="nav-link">Create</a>
+                            </Link>
+                        
+                        </li>
                         <li className="nav-item" onClick={() => {
                             setUser(null); //to clear the state of the user when logging out
                             localStorage.clear();

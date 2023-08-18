@@ -1,33 +1,34 @@
-const auth = require('../middlewares/auth');
-const { validateContact, Contact } = require('../models/Contact');
+const { validateContact, Contact } = require("../models/Contact");
+const auth = require("../middlewares/auth");
 
-const router = require('express').Router();
+const mongoose = require("mongoose");
+const router = require("express").Router();
 
-//create a contact
-router.post("/contact",async(req,res)=>{
-    const{error}=validateContact(req.body);
+// create contact.
+router.post("/contact", auth, async (req, res) => {
+  const { error } = validateContact(req.body);
 
-    if(error){
-        return res.status(400).json({error:error.details[0].message})
-    }
+  if (error) {
+    return res.status(400).json({ error: error.details[0].message });
+  }
 
-    const {name, address ,email, phone} = req.body;
+  const { name, address, email, phone } = req.body;
 
-    try{
-        const newContact = new Contact({
-            name,
-            address,
-            email,
-            phone,
-            postedBy: req.user._id,
-        });
-        const result = await newContact.save();
+  try {
+    const newContact = new Contact({
+      name,
+      address,
+      email,
+      phone,
+      postedBy: req.user._id,
+    });
+    const result = await newContact.save();
 
-        return res.status(201).json({...result._doc});
-    }catch(err){
-        console.log(err);
-    }
-})
+    return res.status(201).json({ ...result._doc });
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 //fetch contact
 router.get("/mycontacts",auth,async(req,res)=>{
