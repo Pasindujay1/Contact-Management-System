@@ -7,6 +7,7 @@ import { AuthcontextProvider } from "./context/AuthContext";
 import { ToastContextProvider } from "./context/ToastContext";
 import CreateContact from "./pages/CreateContact";
 import AllContact from "./pages/AllContact";
+import EditContact from "./pages/EditContact";
 
 
 const App = () => {
@@ -20,6 +21,8 @@ const App = () => {
             <Route path ="/register" element={<Register/>} />
             <Route path ="/create" element={<CreateContact/>} />
             <Route path ="/mycontacts" element={<AllContact/>} />
+            <Route path ="/edit/:id" element={<EditContact/>} />
+
 
           </Switch>  
         </Layout>
