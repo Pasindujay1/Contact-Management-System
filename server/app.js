@@ -19,7 +19,7 @@ app.use("/api",require("./routes/auth"));
 app.use("/api",require("./routes/contact"));
 
 //server configurations
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 9000;
 app.listen(PORT, async() =>{
     try{
         await connectDB(); //We don't want our app to be executed until our app successfully connects to a database

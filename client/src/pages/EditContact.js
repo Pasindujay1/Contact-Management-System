@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Spinner from "../components/Spinner";
+import AuthContext from "../context/AuthContext";
 import ToastContext from "../context/ToastContext";
 
 const EditContact = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const { user } = useContext(AuthContext);
   const { toast } = useContext(ToastContext);
 
   const [userDetails, setUserDetails] = useState({

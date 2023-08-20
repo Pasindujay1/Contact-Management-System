@@ -31,17 +31,23 @@ export const AuthcontextProvider = ({children}) =>{
                 },
             })
             const result = await res.json();
-            if(!result.error){
-                setUser(result);
-
-                navigate("/",{replace:true}); //navigate user to home route  
-            }else{
-                navigate("/login",{replace:true});
+            if (!result.error) {
+              if (location.pathname === "/login" ||location.pathname === "/register"){
+                setTimeout(() => {
+                  navigate("/", { replace: true });
+                }, 500);
+               
+              } else {
+                navigate(location.pathname ? location.pathname : "/");
+              }
+              setUser(result);
+            } else {
+              navigate("/login", { replace: true });
             }
-        }catch(err){
+          } catch (err) {
             console.log(err);
-        }
-    }
+          }
+        };
 
     //login request
     const loginUser = async(userData)=>{

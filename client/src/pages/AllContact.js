@@ -11,6 +11,7 @@ const AllContact = () =>{
     const [loading, setLoading] = useState(false); //For the spinner
     const [modalData, setModalData] = useState({});
     const [contacts, setContacts] = useState([]);
+    const [searchInput, setSearchInput] = useState(""); //For the search bar
 
     const fetchContacts = async()=>{
         setLoading(true);
@@ -66,10 +67,19 @@ const AllContact = () =>{
         }
 
     }
+    const handleSearchSubmit = (event) =>{
+        event.preventDefault();
+
+        const newSearchUser = contacts.filter((contact)=>
+            contact.name.toLowerCase().includes(searchInput.toLowerCase())
+        );
+        setContacts(newSearchUser);
+    }
     
     return <>
         <div>
             <h1>Your Contacts</h1> 
+            <a href="/mycontacts" className="btn btn-danger my-2">Reload Contact</a>
             <hr className="my-4"/>
             {loading ? (
           <Spinner splash="Loading Contacts..." />
@@ -78,7 +88,12 @@ const AllContact = () =>{
             {contacts.length == 0 ? (
               <h3>No contacts created yet</h3>
             ) : (
-              <>
+              <>    
+              <form className="d-flex" onSubmit={handleSearchSubmit}>
+                    <input type="text" name="searchInput" id="searchInput" className="form-control my-2" placeholder="Search Contact" value={searchInput} onChange={(e)=>setSearchInput(e.target.value)}/>
+                    <button type="submit" className="btn btn-info mx-2">Search</button>
+                </form>
+              <p>Your Total Contacts: <strong>{contacts.length}</strong></p>
                 
                 <table className="table table-hover">
                   <thead>
