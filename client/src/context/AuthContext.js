@@ -22,7 +22,6 @@ export const AuthcontextProvider = ({children}) =>{
     const checkUserLoggedIn = async() =>{
         
         
-
         try{
             const res = await fetch(`http://localhost:8000/api/me`,{
                 method:"GET",
